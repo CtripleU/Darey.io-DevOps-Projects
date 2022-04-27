@@ -1,5 +1,6 @@
 # MERN Stack Implementation - SIMPLE TO-DO APPLICATION ON MERN WEB STACK
 
+M - MongoDB E - ExpressJS R - ReactJS N - Node.js
 
 ### STEP 1: Backend Configuration
 
