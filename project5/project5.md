@@ -47,7 +47,9 @@ Create a database
 
 ### STEP 9
 Grant the user prileges to the database and flush privileges
+
 `mysql> GRANT ALL ON test.* TO 'user'@'%' WITH GRANT OPTION;`
+
 `mysql> FLUSH PRIVILEGES;`
 
 ![Screenshot from 2022-04-29 12-48-25](https://user-images.githubusercontent.com/34113547/165933139-1a620887-7e5d-4d62-a7d9-8d7142c287fd.png)
