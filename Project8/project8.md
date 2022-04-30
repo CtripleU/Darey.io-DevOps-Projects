@@ -10,6 +10,7 @@ In order to hide all this complexity and to have a single point of access with a
 
 In this project we will enhance our Tooling Website solution by adding a Load Balancer to disctribute traffic between Web Servers and allow users to access our website using a single URL.
 
+![2](https://user-images.githubusercontent.com/34113547/166122264-b5940bfb-30c7-4e59-84b6-92e3e9827430.png)
 
 
 ## Task
@@ -18,8 +19,20 @@ Deploy and configure an Apache Load Balancer for Tooling Website solution on a s
 To simplify, let us implement this solution with 2 Web Servers, the approach will be the same for 3 and more Web Servers.
 
 ### Prerequisites
-Make sure that you have following servers installed and configured within Project-7:
+The following servers installed and configured within Project-7:
+* Two RHEL8 Web Servers
+* One MySQL DB Server (based on Ubuntu 20.04)
+* One RHEL8 NFS server
 
-Two RHEL8 Web Servers
-One MySQL DB Server (based on Ubuntu 20.04)
-One RHEL8 NFS server
+![2](https://user-images.githubusercontent.com/34113547/166122278-a70040cb-36b8-4873-9a44-2c67ee1329d6.png)
+
+
+
+### Configuring Apache as a load Balancer
+
+* Create an Ubuntu Server 20.04 EC2 instance
+
+* Open TCP port 80 on the server by creating an Inbound Rule in Security Group
+
+* Install Apache Load Balancer on **load-balancer** server and configure it to point traffic coming to LB to both Web Servers
+
