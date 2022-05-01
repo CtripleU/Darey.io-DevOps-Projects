@@ -30,9 +30,63 @@ The following servers installed and configured within Project-7:
 
 ### Configuring Apache as a load Balancer
 
-* Create an Ubuntu Server 20.04 EC2 instance
+* Create an Ubuntu Server 20.04 EC2 instance **load-balancer**
+
+![Screenshot from 2022-04-30 22-55-39](https://user-images.githubusercontent.com/34113547/166130984-b1f250fc-71c1-41f5-b652-79fcb1c77339.png)
 
 * Open TCP port 80 on the server by creating an Inbound Rule in Security Group
 
+
 * Install Apache Load Balancer on **load-balancer** server and configure it to point traffic coming to LB to both Web Servers
+```
+#Install apache2
+sudo apt update
+sudo apt install apache2 -y
+sudo apt-get install libxml2-dev
+
+#Enable following modules:
+sudo a2enmod rewrite
+sudo a2enmod proxy
+sudo a2enmod proxy_balancer
+sudo a2enmod proxy_http
+sudo a2enmod headers
+sudo a2enmod lbmethod_bytraffic
+
+#Restart apache2 service
+sudo systemctl restart apache2
+```
+
+
+* Make sure Apache is up and running
+ `sudo systemctl status apache2`
+ 
+ 
+
+### Configure load balancing
+ 
+* `sudo vi /etc/apache2/sites-available/000-default.conf`
+ 
+Run `sudo systemctl restart apache2` to restart Apache server
+
+
+* To verify that the configuration works, try to access the load balancer's public IP address from the browser
+`http://18.234.174.177/login.php`
+
+* Access the logs by running `sudo tail -f /var/log/httpd/access_log`
+
+As shown in the screenshot above, the app served uses a public IP initially and then changed to the private IP of th eload balancer. Whenever the website is refreshed, more entries are aded to the log.
+The number of requests to each server will be approximately the same since we set loadfactor to the same value for both servers – it means that traffic will be disctributed evenly between them.
+
+
+### Optional Step: Configure Local DNS Names Resolution
+
+* Open the hosts file on your load balancer server and add two records with the private IP address and arbitrary name for both of your Web Servers
+`sudo vi /etc/hosts`
+
+* Next, update the LB config file with those names instead of IP addresses
+
+`sudo vi /etc/apache2/sites-available/000-default.conf`
+
+* Now restart Apache and ensure that the website is still reachable
+
 
