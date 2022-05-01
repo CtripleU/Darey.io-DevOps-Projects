@@ -58,3 +58,8 @@ From the screenshot, the build is successful and is seen under #1
 
 Configure "Post-build Actions" to archive all the files – files resulted from a build are called "artifacts".
 
+Change any file in the GitHub repository and push the changes to the main branch.
+
+
+
+
