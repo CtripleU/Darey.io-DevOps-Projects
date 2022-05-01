@@ -89,4 +89,8 @@ Scroll down to Publish over SSH plugin configuration section and configure it to
 
 Test the configuration and make sure the connection returns Success. Remember, that TCP port 22 on NFS server must be open to receive SSH connections.
 
-Add anothey Post-build action to the project/job to send all files probuced by the build into the defined remote directory. Use ** to copy all files and directories
+Add another Post-build action to the project/job to send all files probuced by the build into the defined remote directory. Use ** to copy all files and directories
+
+Save this configuration and change something the repository
+
+Webhook will trigger a new job and in the "Console Output" of the job you will find something like this:
