@@ -96,3 +96,5 @@ Add another Post-build action to the project/job to send all files probuced by t
 Save this configuration and change something the repository
 
 Webhook will trigger a new job and in the "Console Output" of the job you will find something like this:
+
+testing job2
