@@ -73,6 +73,8 @@ Run `ls /var/lib/jenkins/jobs/tooling/builds/2/archive/` to view them
 
 Now we have our artifacts saved locally on Jenkins server, the next step is to copy them to our NFS server to /mnt/apps directory.
 
+testing job1
+
 1. Install "Publish Over SSH" plugin
 
 2. Configure the job/project to copy artifacts over to NFS server
