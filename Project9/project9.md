@@ -7,7 +7,7 @@ Enhance the architecture prepared in Project 8 by adding a Jenkins server, confi
 ![2](https://user-images.githubusercontent.com/34113547/166131266-b4f9beaa-bd83-4c87-bf52-62b31bb812ad.png)
 
 
-Step 1: Install Jenkins server
+### Step 1: Install Jenkins server
 
 1. Create an AWS EC2 server based on Ubuntu Server 20.04 LTS and name it "Jenkins"
 
@@ -42,7 +42,7 @@ Create an admin user and you will get your Jenkins server address.
 The installation is completed!
 
 
-Step 2: Configure Jenkins to retrieve source codes from GitHub using Webhooks
+### Step 2: Configure Jenkins to retrieve source codes from GitHub using Webhooks
 
 1. Enable webhooks in your GitHub repository settings
 
@@ -61,5 +61,32 @@ Configure "Post-build Actions" to archive all the files – files resulted from 
 Change any file in the GitHub repository and push the changes to the main branch.
 
 
+The automated Jenkins job that receives files from GitHub by webhook trigger was successful.
+
+By default, the artifacts are stored on Jenkins server locally
+
+Run `ls /var/lib/jenkins/jobs/tooling/builds/2/archive/` to view them
+
+## CONFIGURE JENKINS TO COPY FILES TO NFS SERVER VIA SSH
+
+### Step 3: Configure Jenkins to copy files to NFS server via SSH
+
+Now we have our artifacts saved locally on Jenkins server, the next step is to copy them to our NFS server to /mnt/apps directory.
+
+1. Install "Publish Over SSH" plugin
+
+2. Configure the job/project to copy artifacts over to NFS server
+On main dashboard select "Manage Jenkins" and choose "Configure System"
+
+Scroll down to Publish over SSH plugin configuration section and configure it to be able to connect to your NFS server:
+
+* Provide a private key (content of .pem file that you use to connect to NFS server via SSH/Putty)
+* Name
+* Hostname
+* Username
+* Remote directory – /mnt/apps since our Web Servers use it as a mointing point to retrieve files from the NFS server
 
 
+Test the configuration and make sure the connection returns Success. Remember, that TCP port 22 on NFS server must be open to receive SSH connections.
+
+Add anothey Post-build action to the project/job to send all files probuced by the build into the defined remote directory. Use ** to copy all files and directories
