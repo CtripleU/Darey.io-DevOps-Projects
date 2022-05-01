@@ -60,21 +60,29 @@ sudo systemctl restart apache2
 * Make sure Apache is up and running
  `sudo systemctl status apache2`
  
- 
+ ![Screenshot from 2022-05-01 00-29-09](https://user-images.githubusercontent.com/34113547/166131019-78940149-a812-457c-88ff-2d86e6021c61.png)
+
 
 ### Configure load balancing
  
 * `sudo vi /etc/apache2/sites-available/000-default.conf`
- 
+
+![Screenshot from 2022-05-01 00-34-53](https://user-images.githubusercontent.com/34113547/166131028-7c278d5d-3725-43da-8b3f-7e82e94a735d.png)
+![Screenshot from 2022-05-01 00-37-29](https://user-images.githubusercontent.com/34113547/166131038-90d70896-1df4-4cb0-8f4c-48a78105dabf.png)
+
 Run `sudo systemctl restart apache2` to restart Apache server
 
 
 * To verify that the configuration works, try to access the load balancer's public IP address from the browser
 `http://18.234.174.177/login.php`
 
+![Screenshot from 2022-05-01 00-44-02](https://user-images.githubusercontent.com/34113547/166131045-cc8afc7d-73e2-4a78-b3e1-e27ac03d0c95.png)
+
 * Access the logs by running `sudo tail -f /var/log/httpd/access_log`
 
-As shown in the screenshot above, the app served uses a public IP initially and then changed to the private IP of th eload balancer. Whenever the website is refreshed, more entries are aded to the log.
+![Screenshot from 2022-05-01 01-05-52](https://user-images.githubusercontent.com/34113547/166131052-4be0a5dc-61ea-4322-94b2-d21278453ea4.png)
+
+As shown in the screenshot above, the app served was using a public IP initially and then changed to the private IP of th eload balancer. Whenever the website is refreshed, more entries are aded to the log.
 The number of requests to each server will be approximately the same since we set loadfactor to the same value for both servers – it means that traffic will be disctributed evenly between them.
 
 
@@ -83,10 +91,17 @@ The number of requests to each server will be approximately the same since we se
 * Open the hosts file on your load balancer server and add two records with the private IP address and arbitrary name for both of your Web Servers
 `sudo vi /etc/hosts`
 
+![Screenshot from 2022-05-01 05-08-24](https://user-images.githubusercontent.com/34113547/166131065-ae449917-b927-4795-8ec2-d98ac55f34bb.png)
+
 * Next, update the LB config file with those names instead of IP addresses
 
 `sudo vi /etc/apache2/sites-available/000-default.conf`
 
+![Screenshot from 2022-05-01 05-10-27](https://user-images.githubusercontent.com/34113547/166131071-0be649e9-d5b0-4705-932a-1bcd61b51794.png)
+
 * Now restart Apache and ensure that the website is still reachable
+
+![Screenshot from 2022-05-01 05-14-20](https://user-images.githubusercontent.com/34113547/166131081-a7bbb504-38a0-45c6-9440-9776b7b28fd7.png)
+
 
 
