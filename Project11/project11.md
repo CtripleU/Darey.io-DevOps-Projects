@@ -74,9 +74,25 @@ Clone the ansible-config-mgt repo to your Jenkins-Ansible instance
 ![Screenshot from 2022-05-22 22-43-26](https://user-images.githubusercontent.com/34113547/169901140-10082a2b-4571-4a3c-810c-f32e4f2666d3.png)
 
 * Create a directory and name it playbooks – it will be used to store all your playbook files.
+![Screenshot from 2022-05-22 22-43-43](https://user-images.githubusercontent.com/34113547/169901557-ec6bb65b-c773-4aad-a32c-6ef23f36138f.png)
 
 * Create a directory and name it inventory – it will be used to keep your hosts organised.
+![Screenshot from 2022-05-22 22-45-04](https://user-images.githubusercontent.com/34113547/169901595-8a3b15d3-6751-4eda-a173-029223ea2a50.png)
 
 * Within the playbooks folder, create your first playbook, and name it common.yml
+![Screenshot from 2022-05-22 22-45-51](https://user-images.githubusercontent.com/34113547/169901667-ecd7bec5-809e-4ef4-b468-4a3e2ffd315d.png)
 
 * Within the inventory folder, create an inventory file (.yml) for each environment (Development, Staging Testing and Production) dev, staging, uat, and prod respectively.
+![Screenshot from 2022-05-22 22-48-22](https://user-images.githubusercontent.com/34113547/169901702-4b52b5d6-89e4-4a0d-80df-faa343b03a36.png)
+
+![Screenshot from 2022-05-23 00-13-27](https://user-images.githubusercontent.com/34113547/169902495-54fee4dc-c929-47db-8768-bcad1b7855c6.png)
+
+
+### STEP 4 – Set up an Ansible Inventory
+
+An Ansible inventory file defines the hosts and groups of hosts upon which commands, modules, and tasks in a playbook operate. We need to have a way to organize our hosts in such an Inventory.
+
+Since Ansible uses TCP port 22 by default, it needs to ssh into target servers from Jenkins-Ansible host – for this you can implement the concept of ssh-agent. Now you need to import your key into ssh-agent:
+
+
+
