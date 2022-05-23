@@ -157,15 +157,20 @@ Update your playbooks/common.yml file:
 
 ### STEP 7 – Run first Ansible test
 
-`cd ansible-config-mgt`
-`ansible-playbook -i inventory/dev.yml playbooks/common.yml`
+```
+cd ansible-config-mgt
+ansible-playbook -i inventory/dev.yml playbooks/common.yml
+```
 
 ![Screenshot from 2022-05-23 19-22-07](https://user-images.githubusercontent.com/34113547/169906283-0eaef4f0-7d9d-48a0-9034-1446f00ed7ba.png)
 
 You can verify that wireshark has been installed by running `wireshark --version` on each server
 
+The updated Ansible architecture now looks like this:
+![neww](https://user-images.githubusercontent.com/34113547/169907093-e2de77c7-22fa-49d8-a074-67288628125b.png)
 
-Additional Ansible Exercises:
+
+### Additional Ansible Exercise:
 
 * Change timezone on servers
 
