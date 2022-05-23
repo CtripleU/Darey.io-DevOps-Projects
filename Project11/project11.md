@@ -94,5 +94,81 @@ An Ansible inventory file defines the hosts and groups of hosts upon which comma
 
 Since Ansible uses TCP port 22 by default, it needs to ssh into target servers from Jenkins-Ansible host – for this you can implement the concept of ssh-agent. Now you need to import your key into ssh-agent:
 
+```
+eval `ssh-agent -s`
+ssh-add <path-to-private-key>
+```
+
+![Screenshot from 2022-05-23 14-46-50](https://user-images.githubusercontent.com/34113547/169904083-1bc12171-9225-450e-bde0-b61b1ed188a9.png)
+
+Do this for all servers.
+
+Update your inventory/dev.yml file with this snippet of code:
+
+```
+[nfs]
+<NFS-Server-Private-IP-Address> ansible_ssh_user='ec2-user'
+
+[webservers]
+<Web-Server1-Private-IP-Address> ansible_ssh_user='ec2-user'
+<Web-Server2-Private-IP-Address> ansible_ssh_user='ec2-user'
+
+[db]
+<Database-Private-IP-Address> ansible_ssh_user='ec2-user' 
+
+[lb]
+<Load-Balancer-Private-IP-Address> ansible_ssh_user='ubuntu'
+```
+![Screenshot from 2022-05-23 13-57-41](https://user-images.githubusercontent.com/34113547/169904420-d6aa7638-25d8-430a-99cd-e2ce157fbdb9.png)
 
 
+### STEP 5 – Create a Common Playbook
+
+It is time to start giving Ansible the instructions on what you needs to be performed on all servers listed in inventory/dev.
+
+In common.yml playbook you will write configuration for repeatable, re-usable, and multi-machine tasks that is common to systems within the infrastructure.
+
+Update your playbooks/common.yml file:
+
+![Screenshot from 2022-05-23 17-35-18](https://user-images.githubusercontent.com/34113547/169904660-1da1da5b-f268-4565-81ff-3804c0ffa396.png)
+
+
+### STEP 6 – Update GIT with the latest code
+
+* Commit your code into GitHub:
+
+* Create a Pull request (PR)
+![Screenshot from 2022-05-23 17-39-55](https://user-images.githubusercontent.com/34113547/169905713-960a14e5-b32d-4591-b249-96e66f947587.png)
+
+![Screenshot from 2022-05-23 17-40-04](https://user-images.githubusercontent.com/34113547/169905772-d471be6e-c7c0-4139-b60f-37197d663f42.png)
+
+* Wear a hat of another developer for a second, and act as a reviewer. Merge the code to the main branch.
+![Screenshot from 2022-05-23 17-40-26](https://user-images.githubusercontent.com/34113547/169905817-f76b48df-3db5-43db-ae2e-6079af47ce69.png)
+
+* Head back on your terminal, checkout from the feature branch into the master, and pull down the latest changes.
+![Screenshot from 2022-05-23 17-42-21](https://user-images.githubusercontent.com/34113547/169905884-ed230c12-84ad-4e58-a6f6-2350040a8ccb.png)
+
+* Once your code changes appear in master branch – Jenkins will do its job and save all the files (build artifacts) to /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/ directory on Jenkins-Ansible server.
+
+![Screenshot from 2022-05-23 17-43-36](https://user-images.githubusercontent.com/34113547/169905928-ad9f638e-dcc7-4334-9e45-4f598eab6648.png)
+
+![Screenshot from 2022-05-23 17-44-25](https://user-images.githubusercontent.com/34113547/169905968-b6f502f4-24e5-4683-8ccc-9f9f356bde78.png)
+
+
+### STEP 7 – Run first Ansible test
+
+`cd ansible-config-mgt`
+`ansible-playbook -i inventory/dev.yml playbooks/common.yml`
+
+![Screenshot from 2022-05-23 19-22-07](https://user-images.githubusercontent.com/34113547/169906283-0eaef4f0-7d9d-48a0-9034-1446f00ed7ba.png)
+
+You can verify that wireshark has been installed by running `wireshark --version` on each server
+
+
+Additional Ansible Exercises:
+
+* Change timezone on servers
+
+![Screenshot from 2022-05-23 19-39-48](https://user-images.githubusercontent.com/34113547/169906747-33823365-1d33-4079-bb6e-f53c8fbe2c20.png)
+
+![Screenshot from 2022-05-23 19-40-05](https://user-images.githubusercontent.com/34113547/169906817-5d4c193a-742e-47c0-9f9b-280b9328c254.png)
