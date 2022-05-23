@@ -1,6 +1,6 @@
 # Ansible – Automate Project 7 to 10
 
-### INSTALL AND CONFIGURE ANSIBLE ON EC2 INSTANCE
+### STEP 1 - Install and configure Ansible on EC2 instance
 
 1. Update the Name tag on your Jenkins EC2 Instance from Project 9 to **Jenkins-Ansible**. This server will be used to run playbooks
 
@@ -38,5 +38,45 @@ sudo apt install ansible
 
 ![Screenshot from 2022-05-22 20-54-55](https://user-images.githubusercontent.com/34113547/169898095-e7520e9f-df89-4f72-8c57-14578b2015b6.png)
 
+5. Test your setup by making some change in README.MD file in master branch and make sure that builds starts automatically and Jenkins saves the files (build artifacts) in following the /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/ directory.
+
+![Screenshot from 2022-05-22 20-57-55](https://user-images.githubusercontent.com/34113547/169898345-5d727b3e-9ff0-4826-bf4b-fa77cce0e3e6.png)
+
+![Screenshot from 2022-05-22 20-58-49](https://user-images.githubusercontent.com/34113547/169898396-51297f22-a358-4748-9eae-d7e02655d402.png)
+
+The setup now looks like this:
+![neww](https://user-images.githubusercontent.com/34113547/169898516-8a248d3d-1eb2-4b0e-9c38-f5df7183ba54.png)
+
+* Allocate an Elastic IP to the Jenkins-Ansible server to avoid having to reconfigure GitHub webhook to a new IP address every time you stop/start your Jenkins-Ansible server
+
+![Screenshot from 2022-05-22 21-03-11](https://user-images.githubusercontent.com/34113547/169900671-b5b58ba6-3759-44b1-bf63-15bfebac8544.png)
+
+![Screenshot from 2022-05-22 21-11-45](https://user-images.githubusercontent.com/34113547/169900750-72f84539-b9fe-47b1-b28b-780e5c04e6a5.png)
 
 
+### STEP 2 - Prepare your development environment using Visual Studio Code
+
+Install VS Code and set it up to connect to the ansible-config-mgt repository created earlier.
+
+Clone the ansible-config-mgt repo to your Jenkins-Ansible instance
+
+`git clone <ansible-config-mgt repo link>`
+
+![Screenshot from 2022-05-23 22-24-12](https://user-images.githubusercontent.com/34113547/169900105-688b531b-0630-4bb1-a665-9bcfce5ed8ff.png)
+
+
+### STEP 3 - Begin Ansible development
+
+* In your ansible-config-mgt GitHub repository, create a new branch that will be used for development of a new feature.
+![Screenshot from 2022-05-22 21-17-24](https://user-images.githubusercontent.com/34113547/169901010-08c49881-38c9-454f-a474-548a64fe592a.png)
+
+* Checkout the newly created feature branch to your local machine and start building your code and directory structure
+![Screenshot from 2022-05-22 22-43-26](https://user-images.githubusercontent.com/34113547/169901140-10082a2b-4571-4a3c-810c-f32e4f2666d3.png)
+
+* Create a directory and name it playbooks – it will be used to store all your playbook files.
+
+* Create a directory and name it inventory – it will be used to keep your hosts organised.
+
+* Within the playbooks folder, create your first playbook, and name it common.yml
+
+* Within the inventory folder, create an inventory file (.yml) for each environment (Development, Staging Testing and Production) dev, staging, uat, and prod respectively.
