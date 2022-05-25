@@ -22,3 +22,65 @@ Take note that in most cases it is recommended to use static assignments for pla
 
 Your GitHub shall have following structure by now:
   
+Since we will be using the same Ansible to configure multiple environments, and each of these environments will have certain unique attributes, such as servername, ip-address etc., we will need a way to set values to variables per specific environment.
+
+For this reason, we will now create a folder to keep each environment’s variables file. Therefore, create a new folder env-vars, then for each environment, create new YAML files which we will use to set variables.
+
+Your layout should now look like this.
+  
+Now paste the instruction below into the env-vars.yml file.
+  
+  
+Notice 3 things to notice here:
+
+1. We used include_vars syntax instead of include, this is because Ansible developers decided to separate different features of the module. From Ansible version 2.8, the include module is deprecated and variants of include_* must be used. These are:
+  * include_role
+  * include_tasks
+  * include_vars
+
+  In the same version, variants of import were also introduces, such as:
+  * import_role
+  * import_tasks
+
+2. We made use of a special variables `{ playbook_dir }` and `{ inventory_file }`. `{ playbook_dir }` will help Ansible to determine the location of the running playbook, and from there navigate to other path on the filesystem. `{ inventory_file }` on the other hand will dynamically resolve to the name of the inventory file being used, then append **.yml** so that it picks up the required file within the env-vars folder.
+
+3. We are including the variables using a loop. **with_first_found** implies that, looping through the list of files, the first one found is used. This is good so that we can always set default values in case an environment specific env file does not exist.
+
+
+
+## Update site.yml with dynamic assignments
+  
+Update site.yml file to make use of the dynamic assignment. (At this point, we cannot test it yet. We are just setting the stage for what is yet to come. So hang on to your hats)
+
+site.yml should now look like this.
+
+### Community Roles
+You need to create a role for MySQL database – it should install the MySQL package, create a database and configure users. There are tons of roles that have already been developed by other open source engineers out there. These roles are actually production ready, and dynamic to accomodate most of Linux flavours. With Ansible Galaxy again, we can simply download a ready to use ansible role, and keep going.
+  
+## Download MySQL Ansible role
+
+```
+git branch roles-feature
+git switch roles-feature
+```
+
+Inside roles directory create your new MySQL role and rename the folder to mysql with 
+```
+ansible-galaxy install geerlingguy.mysql
+
+mv geerlingguy.mysql/ mysql
+```
+
+Read the README.md file, and edit roles configuration to use correct credentials for MySQL required for the tooling website.
+
+Now, if you are satisfied with your codes, you can create a Pull Request and merge it to main branch on GitHub
+  
+
+## Load Balancer roles
+  
+To able to choose which Load Balancer to use, Nginx or Apache, we need to have two roles respectively:
+
+- Nginx
+- Apache
+
+ 
