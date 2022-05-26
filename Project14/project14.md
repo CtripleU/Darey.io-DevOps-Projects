@@ -104,3 +104,6 @@ To really appreciate and feel the difference of Cloud Blue UI, it is recommended
 
 ### Running Ansible Playbook from Jenkins
 
+1. Installing Ansible on Jenkins
+2. Installing Ansible plugin in Jenkins UI
+3. Creating Jenkinsfile from scratch. (Delete all you currently have in there and start all over to get Ansible to run successfully)
